@@ -19,13 +19,14 @@ const addItem = () => {
     addItemInHTML(itemInputValue)
     let itemArray = localStorage.getItem("item");
 
-    if ( (typeof itemArray) == "string" || (itemArray == null) ){
+    if ( itemArray == null ){
         // jika itemArray adalah string atau null maka kita bikin array baru dengan key 0 dengan value
         // itemInputValue
         itemArray = [itemInputValue]
     }else{
         // jika itemArray adalah bukan string atau null maka kemungkinan dia adalah array
         // jadi kita tambahkan dengan menggunakan method "pus"
+        itemArray = JSON.parse(itemArray);
         itemArray.push(itemInputValue)
     }
 
