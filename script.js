@@ -5,16 +5,20 @@ const addItemInHTML = value => {
     }
 
     const daftarList = document.getElementsByClassName("daftar-list")
+
     const li = document.createElement("li")
-    const content = document.createTextNode(value)
+    const itemHTML =`${value} <button>hapus</button>`;
 
     daftarList[0].appendChild(li)
-    li.appendChild(content)
+    li.innerHTML = itemHTML
 }
 
 const addItem = () => {
     const itemInput = document.getElementsByName("itemInput")
     let itemInputValue = itemInput[0].value
+    if (!itemInputValue){
+        return ;    // gunanya utk exit
+    }
 
     addItemInHTML(itemInputValue)
     let itemArray = localStorage.getItem("item");
@@ -34,11 +38,22 @@ const addItem = () => {
     const itemArrayStringify = JSON.stringify(itemArray);   
     
     localStorage.setItem("item",itemArrayStringify);
+
+    itemInput[0].value = ""
 }
 
 const runNow = () => {
-    const item = localStorage.getItem("item")
-    addItemInHTML(item)
+    const itemFromLS = localStorage.getItem("item")
+    
+    if (itemFromLS != null){
+        debugger;
+        const items = JSON.parse(itemFromLS);
+        
+        items.forEach( item => {
+            addItemInHTML(item)
+        })
+    }
+    
 }
 
 runNow();
